@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>朗沃J149随机抽问系统</title>
+</head>
+<body>
+<!-- 代码 开始 -->
+
+<style>
+#container {
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+	height: 100%
+}
+#show_num {
+	width: 100%;
+	background: #fff;
+	height: 100%;
+	padding:5% 0 3% 1%;
+}
+#num{ padding: 0 0 0 1.2%}
+#start,#stop{margin:15% 4% 0 1%}
+</style>
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.css">
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.2.js"></script>
+<script>
+$(document).ready(function(e) {
+ 	var flag;	//setInterval标志
+	var arr = Array();	//数组
+   	var begin_flag = true;	//初始化开始标志
+	var ret;
+	var num;
+	var max_num; //最大值
+	var repeat = false; //是否能重复
+
+	initial(26);
+
+	//初始化
+	function initial(max) {
+		max_num = max;
+		arr=[];
+		for(var i=0;i<=max_num;i++){
+			arr.push(i)//循环录入数组
+		}
+		begin_flag = true;
+	}
+
+	//开始
+	$("#start").click(function(){
+			if (begin_flag){
+				flag= setInterval(rd,60);
+				begin_flag = false;
+				setTimeout(stop,3000);
+			}						
+		})
+	//结束
+	function stop() {
+		clearInterval(flag);
+		if(!repeat)
+			no_repeat();			
+		begin_flag = true;
+	}
+
+	//产生随机数
+	function rd(){			
+			num = arr[Math.floor(Math.random()*arr.length)];	//获得的随机数
+			//背景变化
+			$("#num_2").css("background","url(images/"+num+".png) no-repeat");
+		    }	
+			
+	//不重复	
+	function no_repeat(){
+			//alert(num);
+			//alert(arr);
+			var arr_2 = Array();
+			for(var i =0; i<arr.length;i++){
+				if (arr[i] == num){
+					continue;	//跳过相同
+					}
+				else{
+					arr_2.push(arr[i]);		//放入新的数组
+					}
+				}
+				//alert(arr_2);
+				if(arr_2.length == 1){	//没有数字了
+					for(var i=0;i<= max_num;i++){
+						arr.push(i)//循环录入数组
+						} 
+					}
+				else{	//还有数字
+				arr = arr_2;						
+				}
+		}		
+  	  });
+</script>
+
+<div id="container"> 
+
+<p style="margin:20px 0"></p>
+</div>
+    </div>
+  </div>
+  <!--第一屏end-->
+  <!--第二屏begin-->
+  <div data-role="page" id="pagetwo" > 
+    <!--返回链接,属性别改--> 
+    <a href="#pageone" data-transition="slide" data-direction="reverse">
+    <div style="background: black"><img src="images/second_bg.png"> </div>
+    </a>
+    <div data-role="content" id="con__1">
+      <p> 
+        <!--数字显示区域begin id别改-->
+      <div id="show_num">
+        <div id="num" style="width:1000px; margin:0 auto; height:488px;">
+			<span id="num_2" style="width:100%; padding-top:50%; float:left;background:url(images/00.png) no-repeat"></span>
+		</div>
+
+        <div style="width:400px; margin:0 auto; height:100px;">
+          <!--按钮begin id别改-->
+          <button id="start" style="width:70%; margin:0 auto; height:50%; background:white">START</button>
+<!--          <button id="stop" style="width:40%; float:left; height:50%; background:white">结束</button>-->
+          <!--按钮end id别改--> </div>
+      </div>
+    </div>
+    </p>
+    <div data-role="footer" id="footerxx" style="position:absolute; width:100%;">
+      <h1>朗沃教育</h1>
+    </div>
+  </div>
+  <!--第二屏end--> 
+</div>
+<script type="text/javascript">
+function show_box(id) {
+	 jQuery('.widget-box.visible').removeClass('visible');
+	 jQuery('#'+id).addClass('visible');
+}
+</script>
+<!-- 代码 结束 -->
+
+
+</body>
+</html>
